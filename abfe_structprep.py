@@ -19,7 +19,7 @@ from datetime import datetime
 import logging
 from configobj import ConfigObj
 from ommsystem import *
-from utils.AtomUtils import AtomUtils, residue_is_solvent
+from utils.AtomUtils import AtomUtils, residue_is_solute
 
 class OMMSystemABFEnoATM(OMMSystemABFE):
     def create_system(self):
@@ -72,7 +72,7 @@ def do_mintherm(keywords, restrain_solutes, logger):
         pdb = PDBFile(pdbtopfile)
         non_ion_wat_atoms = []
         for res in pdb.topology.residues():
-            if residue_is_solvent(res):
+            if residue_is_solute(res):
                 for atom in res.atoms():
                     non_ion_wat_atoms.append(atom.index)
         keywords['POS_RESTRAINED_ATOMS'] = non_ion_wat_atoms
